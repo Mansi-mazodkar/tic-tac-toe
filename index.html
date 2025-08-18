@@ -6,8 +6,22 @@
     <title>Ultimate Pookie Tic-Tac-Toe ✨</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600&family=Poppins:wght@300;400;500;600&family=Baloo+2:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&family=Poppins:wght@400;600&family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
     <style>
+        /* General Setup & Resets */
+        :root {
+            --primary-grad: linear-gradient(135deg, #ff6b9d, #ffd93d);
+            --secondary-grad: linear-gradient(135deg, #667eea, #764ba2);
+            --accent-grad: linear-gradient(135deg, #6bcf7e, #36d1dc);
+            --text-color: #333;
+            --bg-color: #fff;
+            --screen-bg: rgba(255, 255, 255, 0.95);
+            --screen-border: rgba(255, 255, 255, 0.3);
+            --shadow-color-primary: rgba(255, 107, 157, 0.3);
+            --shadow-color-secondary: rgba(102, 126, 234, 0.3);
+            --shadow-color-accent: rgba(107, 207, 126, 0.3);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -15,665 +29,225 @@
         }
 
         body {
-            font-family: 'Fredoka', cursive;
+            font-family: 'Fredoka', sans-serif;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             overflow-x: hidden;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease-in-out;
+            color: var(--text-color);
+            background: var(--bg-color);
         }
 
-        .theme-pookie {
-            background: linear-gradient(135deg, #ff6b9d 0%, #ffd93d 50%, #6bcf7e 100%);
-        }
+        /* --- THEME DEFINITIONS --- */
+        .theme-pookie { --primary-grad: linear-gradient(135deg, #ff6b9d, #ffd93d); --accent-grad: linear-gradient(135deg, #6bcf7e, #36d1dc); --bg-color: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%); --text-color: #333; --screen-bg: rgba(255, 255, 255, 0.95); --shadow-color-primary: rgba(255, 107, 157, 0.3); }
+        .theme-forest { --primary-grad: linear-gradient(135deg, #56ab2f, #a8e063); --accent-grad: linear-gradient(135deg, #ff8008, #ffc837); --bg-color: linear-gradient(135deg, #134e5e, #71b280); --text-color: #fff; --screen-bg: rgba(19, 78, 94, 0.9); --screen-border: rgba(255, 255, 255, 0.2); --shadow-color-primary: rgba(86, 171, 47, 0.4); }
+        .theme-neon { --primary-grad: linear-gradient(135deg, #00ffff, #ff00ff); --accent-grad: linear-gradient(135deg, #f7ff00, #db36a4); --bg-color: linear-gradient(135deg, #0f0c29, #302b63, #24243e); --text-color: #00ffff; --screen-bg: rgba(15, 15, 35, 0.9); --screen-border: rgba(0, 255, 255, 0.3); --shadow-color-primary: rgba(0, 255, 255, 0.4); }
+        .theme-galaxy { --primary-grad: linear-gradient(135deg, #6a11cb, #2575fc); --accent-grad: linear-gradient(135deg, #ec008c, #fc6767); --bg-color: linear-gradient(135deg, #000428, #004e92); --text-color: #fff; --screen-bg: rgba(0, 4, 40, 0.9); --screen-border: rgba(255, 255, 255, 0.3); --shadow-color-primary: rgba(106, 17, 203, 0.4); }
+        .theme-candy { --primary-grad: linear-gradient(135deg, #ff9a9e, #fecfef); --accent-grad: linear-gradient(135deg, #a1c4fd, #c2e9fb); --bg-color: linear-gradient(135deg, #ffdde1, #ee9ca7); --text-color: #d6336c; --screen-bg: rgba(255, 255, 255, 0.95); --screen-border: rgba(255, 255, 255, 0.5); --shadow-color-primary: rgba(255, 154, 158, 0.4); }
+        .theme-pookie-paradise { --primary-grad: linear-gradient(135deg, #f77062, #fe5196); --accent-grad: linear-gradient(135deg, #96fbc4, #f9f586); --bg-color: linear-gradient(135deg, #fccb90, #d57eeb); --text-color: #fff; --screen-bg: rgba(255, 255, 255, 0.2); --screen-border: rgba(255, 255, 255, 0.4); --shadow-color-primary: rgba(254, 81, 150, 0.5); }
+        .theme-golden { --primary-grad: linear-gradient(135deg, #ffd700, #f0b90b); --accent-grad: linear-gradient(135deg, #e6e6e6, #ffffff); --bg-color: linear-gradient(135deg, #141e30, #243b55); --text-color: #ffd700; --screen-bg: rgba(20, 30, 48, 0.9); --screen-border: rgba(255, 215, 0, 0.4); --shadow-color-primary: rgba(255, 215, 0, 0.4); }
+        .theme-cyberpunk { --primary-grad: linear-gradient(135deg, #7c05f2, #fd1d53); --accent-grad: linear-gradient(135deg, #00f2fe, #4facfe); --bg-color: url('data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"%3E%3Cg fill-rule="evenodd"%3E%3Cg fill="%231a1a3e" fill-opacity="0.4"%3E%3Cpath opacity=".5" d="M96 95h4v1h-4v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4h-9v4h-1v-4H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15v-9H0v-1h15V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h9V0h1v15h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9h4v1h-4v9zm-1 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm9-10v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-10 0v-9h-9v9h9zm-9-10h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9zm10 0h9v-9h-9v9z"/%3E%3Cpath d="M6 5V0h1v5h4V0h1v5h4V0h1v5h4V0h1v5h4V0h1v5h4V0h1v5h4V0h1v5h4V0h1v5h4V0h1v5h4V0h1v5h4V0h1v5h4V0h1v5h5v1h-5v4h5v1h-5v4h5v1h-5v4h5v1h-5v4h5v1h-5v4h5v1h-5v4h5v1h-5v4h5v1h-5v4h5v1h-5v4h5v1h-5v4h5v1h-5v4h-1v-4h-4v4h-1v-4h-4v4h-1v-4h-4v4h-1v-4h-4v4h-1v-4h-4v4h-1v-4h-4v4h-1v-4h-4v4h-1v-4h-4v4h-1v-4h-4v4h-1v-4h-4v4H6v-4H5v4H4v-4H3v4H2v-4H1v-4H0v-1h1v-4H0v-1h1v-4H0v-1h1v-4H0v-1h1v-4H0v-1h1v-4H0v-1h1v-4H0v-1h1v-4H0v-1h1v-4H0v-1h1v-4H0V5h1V4h4V3h4V2h4V1h4V0h5z"/%3E%3C/g%3E%3C/g%3E%3C/svg%3E'), #010101; --text-color: #00f2fe; --screen-bg: rgba(1, 1, 1, 0.85); --screen-border: rgba(124, 5, 242, 0.5); --shadow-color-primary: rgba(124, 5, 242, 0.6); }
 
-        .theme-neon {
-            background: linear-gradient(135deg, #0f0f23 0%, #1a0033 50%, #2d1b69 100%);
-            color: #00ffff;
-        }
-
-        .theme-galaxy {
-            background: linear-gradient(135deg, #000428 0%, #004e92 100%);
-            color: white;
-        }
-
-        .theme-candy {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 25%, #fecfef 75%, #ff9a9e 100%);
-        }
-
-        .theme-forest {
-            background: linear-gradient(135deg, #134e5e 0%, #71b280 100%);
-            color: white;
-        }
-
-        .theme-minimal {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #333;
-        }
-
-        .container {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            text-align: center;
-            position: relative;
-        }
-
+        /* Container and Screen Management */
+        .container { width: 100%; max-width: 400px; padding: 20px; text-align: center; position: relative; }
         .screen {
             display: none;
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--screen-bg);
+            color: var(--text-color);
             border-radius: 25px;
             padding: 30px 25px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.15);
             backdrop-filter: blur(15px);
-            border: 2px solid rgba(255, 255, 255, 0.3);
+            border: 2px solid var(--screen-border);
             animation: slideIn 0.5s ease-out;
             position: relative;
-            overflow: hidden;
         }
+        .screen.active { display: block; }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
 
-        .theme-neon .screen {
-            background: rgba(15, 15, 35, 0.9);
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-        }
-
-        .theme-galaxy .screen {
-            background: rgba(0, 4, 40, 0.9);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-        }
-
-        .screen.active {
-            display: block;
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* Coin Display */
         .coin-display {
-            position: absolute;
-            top: -15px;
-            right: 20px;
+            position: absolute; top: -15px; right: 20px;
             background: linear-gradient(45deg, #ffd700, #ffa500);
-            color: white;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-weight: 600;
-            font-size: 0.9em;
+            color: white; padding: 8px 15px; border-radius: 20px;
+            font-weight: 600; font-size: 0.9em;
             box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
             z-index: 10;
         }
 
+        /* Typography */
         .title {
-            font-size: 2.5em;
-            font-weight: 600;
-            background: linear-gradient(45deg, #ff6b9d, #ffd93d, #6bcf7e);
-            -webkit-background-clip: text;
+            font-size: 2.5em; font-weight: 700;
+            background: var(--primary-grad);
+            -webkit-background-clip: text; background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 10px;
-            text-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 10px; text-shadow: 0 4px 8px rgba(0,0,0,0.1);
         }
+        .subtitle { font-size: 1.1em; color: var(--text-color); opacity: 0.8; margin-bottom: 30px; font-weight: 400; }
+        .section-title { font-size: 1.3em; font-weight: 600; margin-bottom: 15px; color: var(--text-color); text-align: center; }
 
-        .theme-neon .title {
-            background: linear-gradient(45deg, #00ffff, #ff00ff, #ffff00);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-        }
-
-        .subtitle {
-            font-size: 1.1em;
-            color: #666;
-            margin-bottom: 30px;
-            font-weight: 400;
-        }
-
-        .theme-neon .subtitle {
-            color: #00ffff;
-        }
-
-        .theme-galaxy .subtitle {
-            color: #ccc;
-        }
-
+        /* Buttons */
         .btn {
-            width: 100%;
-            padding: 15px 25px;
-            margin: 10px 0;
-            border: none;
-            border-radius: 20px;
-            font-family: 'Fredoka', cursive;
-            font-size: 1.1em;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: linear-gradient(45deg, #ff6b9d, #ffd93d);
-            color: white;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.2);
-            box-shadow: 0 8px 20px rgba(255, 107, 157, 0.3);
-            position: relative;
-            overflow: hidden;
+            width: 100%; padding: 15px 25px; margin: 10px 0;
+            border: none; border-radius: 20px;
+            font-family: 'Fredoka', sans-serif; font-size: 1.1em; font-weight: 500;
+            cursor: pointer; transition: all 0.3s ease;
+            color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            box-shadow: 0 8px 20px var(--shadow-color-primary);
+            position: relative; overflow: hidden;
+            background: var(--primary-grad);
         }
+        .btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 12px 25px var(--shadow-color-primary); }
+        .btn:active { transform: translateY(-1px); }
+        .btn-secondary { background: var(--secondary-grad); box-shadow: 0 8px 20px var(--shadow-color-secondary); }
+        .btn-customize { background: var(--accent-grad); box-shadow: 0 8px 20px var(--shadow-color-accent); }
+        .back-btn, .reset-btn { width: auto; padding: 10px 20px; margin: 15px 5px 5px; font-size: 0.95em; }
 
-        .theme-neon .btn {
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
-        }
-
-        .theme-galaxy .btn {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.4);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 25px rgba(255, 107, 157, 0.4);
-        }
-
-        .theme-neon .btn:hover {
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
-        }
-
-        .btn:active {
-            transform: translateY(-1px); 
-        }
-
-        .btn-secondary {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.3);
-        }
-
-        .btn-customize {
-            background: linear-gradient(45deg, #6bcf7e, #36d1dc);
-            box-shadow: 0 8px 20px rgba(107, 207, 126, 0.3);
-        }
-
+        /* Game Board & Cells */
         .game-board {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-            margin: 25px 0;
-            background: linear-gradient(45deg, #ff6b9d, #ffd93d);
-            padding: 8px;
-            border-radius: 20px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 25px 0;
+            background: var(--primary-grad); padding: 8px; border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
-
-        .theme-neon .game-board {
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
-        }
-
-        .theme-galaxy .game-board {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-        }
-
-        .theme-candy .game-board {
-            background: linear-gradient(45deg, #ff9a9e, #fecfef);
-        }
-
-        .theme-forest .game-board {
-            background: linear-gradient(45deg, #134e5e, #71b280);
-        }
-
         .cell {
-            aspect-ratio: 1;
-            border: none;
-            border-radius: 15px;
-            background: white;
-            font-size: 2.5em;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            aspect-ratio: 1; border: none; border-radius: 15px;
+            background: var(--bg-color); color: var(--text-color);
+            font-size: 2.5em; cursor: pointer; display: flex;
+            align-items: center; justify-content: center;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            font-family: 'Fredoka', cursive;
+            font-family: 'Baloo 2', cursive;
         }
+        .cell:hover:not(.taken) { background: rgba(255,255,255,0.5); transform: scale(1.05); }
+        .cell.taken { cursor: not-allowed; }
 
-        .theme-neon .cell {
-            background: rgba(15, 15, 35, 0.9);
-            color: #00ffff;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-        }
-
-        .theme-galaxy .cell {
-            background: rgba(0, 4, 40, 0.8);
-            color: white;
-        }
-
-        .cell:hover:not(.taken) {
-            background: #f0f8ff;
-            transform: scale(1.05);
-        }
-
-        .theme-neon .cell:hover:not(.taken) {
-            background: rgba(0, 255, 255, 0.1);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
-        }
-
-        .cell.taken {
-            cursor: not-allowed;
-        }
-
-        .status {
-            font-size: 1.3em;
-            margin: 20px 0;
-            font-weight: 500;
-            color: #333;
-            min-height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .theme-neon .status {
-            color: #00ffff;
-            text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
-        }
-
-        .theme-galaxy .status {
-            color: white;
-        }
-
-        .score-board {
-            display: flex;
-            justify-content: space-around;
-            margin: 20px 0;
-            background: rgba(255,255,255,0.5);
-            border-radius: 15px;
-            padding: 15px;
-        }
-
-        .theme-neon .score-board {
-            background: rgba(0, 255, 255, 0.1);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-        }
-
-        .score-item {
-            text-align: center;
-        }
-
-        .score-label {
-            font-size: 0.9em;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
-        .theme-neon .score-label {
-            color: #00ffff;
-        }
-
-        .score-value {
-            font-size: 1.5em;
-            font-weight: 600;
-            color: #333;
-        }
-
-        .theme-neon .score-value {
-            color: #00ffff;
-        }
-
-        .theme-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin: 20px 0;
-        }
-
+        /* Game Status & Score */
+        .status { font-size: 1.3em; margin: 20px 0; font-weight: 500; color: var(--text-color); min-height: 40px; display: flex; align-items: center; justify-content: center; }
+        .score-board { display: flex; justify-content: space-around; margin: 20px 0; background: rgba(0,0,0,0.05); border-radius: 15px; padding: 15px; }
+        .score-label { font-size: 0.9em; color: var(--text-color); opacity: 0.7; margin-bottom: 5px; }
+        .score-value { font-size: 1.5em; font-weight: 600; color: var(--text-color); }
+        
+        /* Customization Screen */
+        .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin: 20px 0; }
         .theme-item {
-            padding: 15px;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            min-height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 500; 
-            border: 2px solid transparent;
+            padding: 15px; border-radius: 15px; cursor: pointer; transition: all 0.3s ease;
+            position: relative; min-height: 80px; display: flex; align-items: center; justify-content: center;
+            font-weight: 500; border: 2px solid transparent; color: white; text-shadow: 1px 1px 3px rgba(0,0,0,0.4);
         }
-
-        .theme-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-        }
-
-        .theme-item.selected {
-            border: 2px solid #ff6b9d;
-            box-shadow: 0 0 20px rgba(255, 107, 157, 0.5);
-        }
-
-        .theme-item.locked {
-            opacity: 0.6;
-            cursor: not-allowed;
-        }
-
-        .theme-item.locked::after {
-            content: '🔒';
-            position: absolute;
-            top: 5px;
-            right: 8px;
-            font-size: 1.2em;
-        }
-
+        .theme-item:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.2); }
+        .theme-item.selected { border: 3px solid #ffd700; box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+        .theme-item.locked { opacity: 0.7; filter: grayscale(50%); }
+        .theme-item.locked::after { content: '🔒'; position: absolute; top: 5px; right: 8px; font-size: 1.2em; }
         .coin-price {
-            position: absolute;
-            bottom: 5px;
-            right: 8px;
-            font-size: 0.8em;
-            background: rgba(0,0,0,0.7);
-            color: white;
-            padding: 2px 6px;
-            border-radius: 10px;
+            position: absolute; bottom: 5px; right: 8px; font-size: 0.8em;
+            background: rgba(0,0,0,0.7); color: white; padding: 2px 6px; border-radius: 10px;
         }
-
-        .theme-pookie-preview { background: linear-gradient(45deg, #ff6b9d, #ffd93d); }
-        .theme-neon-preview { background: linear-gradient(45deg, #0f0f23, #00ffff); color: #00ffff; }
-        .theme-galaxy-preview { background: linear-gradient(45deg, #000428, #004e92); color: white; }
-        .theme-candy-preview { background: linear-gradient(45deg, #ff9a9e, #fecfef); }
-        .theme-forest-preview { background: linear-gradient(45deg, #134e5e, #71b280); color: white; }
-        .theme-minimal-preview { background: linear-gradient(45deg, #667eea, #764ba2); color: white; }
-
-        .popup {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0,0,0,0.5);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-
-        .popup-content {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 25px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-            animation: popIn 0.5s ease-out;
-            max-width: 300px;
-            width: 90%;
-        }
-
-        @keyframes popIn {
-            from {
-                opacity: 0;
-                transform: scale(0.8) translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: scale(1) translateY(0);
-            }
-        }
-
-        .popup-title {
-            font-size: 2.2em;
-            margin-bottom: 15px;
-            font-weight: 600;
-        }
-
-        .popup-message {
-            font-size: 1.2em;
-            margin-bottom: 25px;
-            color: #666;
-        }
-
-        .win {
-            background: linear-gradient(45deg, #ff6b9d, #ffd93d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .lose {
-            background: linear-gradient(45deg, #667eea, #764ba2);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .draw {
-            background: linear-gradient(45deg, #6bcf7e, #36d1dc);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .coin-animation {
-            position: fixed;
-            font-size: 1.5em;
-            color: #ffd700;
-            pointer-events: none;
-            z-index: 1001;
-            animation: coinFloat 2s ease-out forwards;
-        }
-
-        @keyframes coinFloat {
-            0% {
-                opacity: 1;
-                transform: translateY(0px) scale(1);
-            }
-            100% {
-                opacity: 0;
-                transform: translateY(-100px) scale(1.2);
-            }
-        }
-
-        .floating-emoji {
-            position: absolute;
-            font-size: 2em;
-            animation: float 3s infinite ease-in-out;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0px) rotate(0deg); }
-            50% { transform: translateY(-20px) rotate(180deg); }
-        }
-
-        .back-btn {
-            background: linear-gradient(45deg, #ff9a9e, #fecfef);
-            box-shadow: 0 8px 20px rgba(255, 154, 158, 0.3);
-            width: auto;
-            padding: 10px 20px;
-            margin: 15px 5px 5px 5px;
-            font-size: 0.95em;
-        }
-
-        .reset-btn {
-            background: linear-gradient(45deg, #ffeaa7, #fdcb6e);
-            box-shadow: 0 8px 20px rgba(255, 234, 167, 0.3);
-            width: auto;
-            padding: 10px 20px;
-            margin: 15px 5px 5px 5px;
-            font-size: 0.95em;
-        }
-
-        .customization-section {
-            margin: 20px 0;
-            text-align: left;
-        }
-
-        .section-title {
-            font-size: 1.3em;
-            font-weight: 600;
-            margin-bottom: 15px;
-            color: #333;
-            text-align: center;
-        }
-
-        .theme-neon .section-title {
-            color: #00ffff;
-        }
-
-        .style-options {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            justify-content: center;
-        }
-
+        .style-options { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
         .style-option {
-            padding: 10px 15px;
-            border: 2px solid transparent;
-            border-radius: 15px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(255,255,255,0.5);
-            font-size: 1.5em;
+            padding: 10px 15px; border: 2px solid transparent; border-radius: 15px; cursor: pointer;
+            transition: all 0.3s ease; background: rgba(0,0,0,0.05); font-size: 1.5em;
         }
+        .style-option.selected { border: 2px solid var(--text-color); background: rgba(0,0,0,0.1); }
+        
+        /* Theme Previews */
+        .theme-pookie-preview { background: linear-gradient(45deg, #ff9a9e, #fad0c4); }
+        .theme-forest-preview { background: linear-gradient(45deg, #134e5e, #71b280); }
+        .theme-neon-preview { background: linear-gradient(45deg, #0f0c29, #302b63); }
+        .theme-galaxy-preview { background: linear-gradient(45deg, #000428, #004e92); }
+        .theme-candy-preview { background: linear-gradient(45deg, #ffdde1, #ee9ca7); }
+        .theme-pookie-paradise-preview { background: linear-gradient(45deg, #fccb90, #d57eeb); }
+        .theme-golden-preview { background: linear-gradient(45deg, #141e30, #243b55); }
+        .theme-cyberpunk-preview { background: linear-gradient(45deg, #010101, #7c05f2); }
 
-        .style-option.selected {
-            border: 2px solid #ff6b9d;
-            background: rgba(255, 107, 157, 0.2);
+
+        /* Popups */
+        .popup {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); display: none; justify-content: center;
+            align-items: center; z-index: 1000;
         }
+        .popup-content {
+            background: #fff; padding: 40px 30px; border-radius: 25px; text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2); animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            max-width: 300px; width: 90%; color: #333;
+        }
+        @keyframes popIn { from { opacity: 0; transform: scale(0.8) translateY(30px); } to { opacity: 1; transform: scale(1) translateY(0); } }
+        .popup-title { font-size: 2.2em; margin-bottom: 15px; font-weight: 600; }
+        .popup-message { font-size: 1.2em; margin-bottom: 25px; color: #666; }
+        .win { background: linear-gradient(45deg, #ff6b9d, #ffd93d); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .lose { background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .draw { background: linear-gradient(45deg, #6bcf7e, #36d1dc); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
 
+        /* Animations */
+        .coin-animation {
+            position: fixed; font-size: 1.5em; color: #ffd700; text-shadow: 0 0 5px black;
+            pointer-events: none; z-index: 1001; animation: coinFloat 2s ease-out forwards;
+        }
+        @keyframes coinFloat { 0% { opacity: 1; transform: translateY(0) scale(1); } 100% { opacity: 0; transform: translateY(-100px) scale(1.2); } }
+        .floating-emoji { position: absolute; font-size: 2em; animation: float 5s infinite ease-in-out; pointer-events: none; z-index: -1; }
+        @keyframes float { 0%, 100% { transform: translateY(0px) rotate(0deg); } 50% { transform: translateY(-20px) rotate(15deg); } }
+
+        /* Responsive Design */
         @media (max-width: 480px) {
-            .container {
-                padding: 10px;
-            }
-
-            .title {
-                font-size: 2.2em;
-            }
-
-            .cell {
-                font-size: 2.2em;
-            }
-
-            .btn {
-                font-size: 1em;
-                padding: 12px 20px;
-            }
-
-            .screen {
-                padding: 25px 20px;
-            }
-
-            .theme-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .container {
-                max-width: 450px;
-            }
-
-            .cell {
-                font-size: 3em;
-            }
-
-            .title {
-                font-size: 3em;
-            }
-
-            .theme-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
+            .container { padding: 10px; }
+            .title { font-size: 2.2em; }
+            .cell { font-size: 2.2em; }
+            .btn { font-size: 1em; padding: 12px 20px; }
+            .screen { padding: 25px 20px; }
+            .theme-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body class="theme-pookie">
+
     <div class="floating-emoji" style="top: 10%; left: 10%; animation-delay: 0s;">✨</div>
     <div class="floating-emoji" style="top: 20%; right: 15%; animation-delay: 1s;">💖</div>
-    <div class="floating-emoji" style="bottom: 30%; left: 8%; animation-delay: 2s;">🌈</div>
-    <div class="floating-emoji" style="bottom: 15%; right: 10%; animation-delay: 0.5s;">⭐</div>
+    <div class="floating-emoji" style="bottom: 30%; left: 8%; animation-delay: 2s;">👑</div>
+    <div class="floating-emoji" style="bottom: 15%; right: 10%; animation-delay: 0.5s;">💅</div>
 
     <div class="container">
         <div id="homeScreen" class="screen active">
-            <div class="coin-display">
-                💰 <span id="coinCount">0</span> coins
-            </div>
+            <div class="coin-display">💰 <span id="coinCount1">0</span></div>
             <h1 class="title">Ultimate Pookie</h1>
             <p class="subtitle">Ready to slay and earn coins? ✨💅</p>
-            <button class="btn" onclick="showGameMode()">Single Player 🤖</button>
+            <button class="btn" onclick="showScreen('difficultyScreen')">Single Player 🤖</button>
             <button class="btn btn-secondary" onclick="startTwoPlayer()">1 vs 1 👥</button>
-            <button class="btn btn-customize" onclick="showCustomization()">Customize Game 🎨</button>
+            <button class="btn btn-customize" onclick="showScreen('customizationScreen')">Customize Vibe 🎨</button>
         </div>
 
         <div id="difficultyScreen" class="screen">
-            <div class="coin-display">
-                💰 <span id="coinCount2">0</span> coins
-            </div>
+            <div class="coin-display">💰 <span id="coinCount2">0</span></div>
             <h2 class="title" style="font-size: 2em;">Pick Your Challenge</h2>
             <p class="subtitle">How hard should the bot go? 😏</p>
-            <button class="btn difficulty-btn" onclick="startSinglePlayer('easy')">Easy Mode 😴<br><small>+8 coins for win</small></button>
-            <button class="btn difficulty-btn" onclick="startSinglePlayer('medium')">Medium 🧠<br><small>+10 coins for win</small></button>
-            <button class="btn difficulty-btn" onclick="startSinglePlayer('hard')">Boss Level 🔥<br><small>+15 coins for win</small></button>
-            <button class="btn back-btn" onclick="showHome()">Back ⬅️</button>
+            <button class="btn" onclick="startSinglePlayer('easy')">Easy Mode 😴<br><small>Win: +10 💰</small></button>
+            <button class="btn" onclick="startSinglePlayer('medium')">Medium 🧠<br><small>Win: +15 💰</small></button>
+            <button class="btn" onclick="startSinglePlayer('hard')">Boss Level 🔥<br><small>Win: +25 💰</small></button>
+            <button class="btn back-btn" onclick="showScreen('homeScreen')">Back ⬅️</button>
         </div>
 
         <div id="customizationScreen" class="screen">
-            <div class="coin-display">
-                💰 <span id="coinCount3">0</span> coins
-            </div>
+            <div class="coin-display">💰 <span id="coinCount3">0</span></div>
             <h2 class="title" style="font-size: 2em;">Customize Your Vibe</h2>
             
             <div class="customization-section">
                 <div class="section-title">🎨 Choose Theme</div>
                 <div class="theme-grid" id="themeGrid">
-                    <div class="theme-item theme-pookie-preview selected" data-theme="pookie">
-                        Pookie Vibes 🌸
-                        <div class="coin-price">Free</div>
                     </div>
-                    <div class="theme-item theme-neon-preview locked" data-theme="neon">
-                        Neon Glow 💫
-                        <div class="coin-price">50 💰</div>
-                    </div>
-                    <div class="theme-item theme-galaxy-preview locked" data-theme="galaxy">
-                        Galaxy ⭐
-                        <div class="coin-price">75 💰</div>
-                    </div>
-                    <div class="theme-item theme-candy-preview locked" data-theme="candy">
-                        Candy Land 🍭
-                        <div class="coin-price">60 💰</div>
-                    </div>
-                    <div class="theme-item theme-forest-preview locked" data-theme="forest">
-                        Forest 🌲
-                        <div class="coin-price">40 💰</div>
-                    </div>
-                    <div class="theme-item theme-minimal-preview locked" data-theme="minimal">
-                        Minimal 🤍
-                        <div class="coin-price">30 💰</div>
-                    </div>
-                </div>
             </div>
 
             <div class="customization-section">
                 <div class="section-title">⚡ X & O Style</div>
-                <div class="style-options">
-                    <div class="style-option selected" data-style="classic">❌⭕</div>
-                    <div class="style-option" data-style="hearts">💖💙</div>
-                    <div class="style-option" data-style="stars">⭐🌟</div>
-                    <div class="style-option" data-style="fire">🔥❄️</div>
-                </div>
+                <div class="style-options" id="styleOptionsGrid">
+                     </div>
             </div>
 
-            <button class="btn back-btn" onclick="showHome()">Back ⬅️</button>
+            <button class="btn back-btn" onclick="showScreen('homeScreen')">Save & Back 💅</button>
         </div>
 
         <div id="gameScreen" class="screen">
-            <div class="coin-display">
-                💰 <span id="coinCount4">0</span> coins
-            </div>
+            <div class="coin-display">💰 <span id="coinCount4">0</span></div>
             <div class="score-board">
                 <div class="score-item">
                     <div class="score-label" id="player1Label">You</div>
@@ -692,20 +266,11 @@
             <div class="status" id="gameStatus">Your turn bestie! 💫</div>
             
             <div class="game-board" id="gameBoard">
-                <button class="cell" onclick="makeMove(0)"></button>
-                <button class="cell" onclick="makeMove(1)"></button>
-                <button class="cell" onclick="makeMove(2)"></button>
-                <button class="cell" onclick="makeMove(3)"></button>
-                <button class="cell" onclick="makeMove(4)"></button>
-                <button class="cell" onclick="makeMove(5)"></button>
-                <button class="cell" onclick="makeMove(6)"></button>
-                <button class="cell" onclick="makeMove(7)"></button>
-                <button class="cell" onclick="makeMove(8)"></button>
-            </div>
+                </div>
 
             <div>
-                <button class="btn back-btn" onclick="showHome()">Home 🏠</button>
-                <button class="btn reset-btn" onclick="resetGame()">New Game 🔄</button>
+                <button class="btn back-btn" onclick="showScreen('homeScreen')">Home 🏠</button>
+                <button class="btn reset-btn" onclick="resetGame()">New Round 🔄</button>
             </div>
         </div>
     </div>
@@ -713,7 +278,7 @@
     <div id="gamePopup" class="popup">
         <div class="popup-content">
             <div class="popup-title" id="popupTitle">You Win!</div>
-            <div class="popup-message" id="popupMessage">You absolutely slayed! 💅✨</div>
+            <div class="popup-message" id="popupMessage">Queen Energy 👑✨</div>
             <div class="popup-message" id="coinReward" style="color: #ffd700; font-weight: 600;"></div>
             <button class="btn" onclick="closePopup()">Play Again! 💖</button>
         </div>
@@ -721,316 +286,262 @@
 
     <div id="purchasePopup" class="popup">
         <div class="popup-content">
-            <div class="popup-title">Unlock Theme? 🎨</div>
-            <div class="popup-message" id="purchaseMessage">Do you want to unlock this theme?</div>
-            <button class="btn" id="confirmPurchase">Yes! Unlock 💎</button>
-            <button class="btn btn-secondary" onclick="closePurchasePopup()">Not now</button>
+            <div class="popup-title">Unlock Vibe? 🎨</div>
+            <div class="popup-message" id="purchaseMessage"></div>
+            <button class="btn" id="confirmPurchase">Yasss, Unlock! 💎</button>
+            <button class="btn btn-secondary" onclick="closePurchasePopup()">Maybe later</button>
         </div>
     </div>
 
     <script>
+        // --- GAME STATE & CONFIGURATION ---
         let currentPlayer = 'X';
         let gameBoard = ['', '', '', '', '', '', '', '', ''];
         let gameMode = 'single';
         let difficulty = 'medium';
         let gameActive = true;
         let scores = { player1: 0, player2: 0, draws: 0 };
-        let coins = 0;
-        let currentTheme = 'pookie';
-        let currentStyle = 'classic';
+        let gameState = {
+            coins: 0,
+            currentTheme: 'pookie',
+            currentStyle: 'classic',
+            unlockedThemes: ['pookie'],
+            scores: { player1: 0, player2: 0, draws: 0 }
+        };
         let selectedThemeForPurchase = '';
 
         const themes = {
-            pookie: { name: 'Pookie Vibes 🌸', cost: 0, unlocked: true },
-            neon: { name: 'Neon Glow 💫', cost: 50, unlocked: false },
-            galaxy: { name: 'Galaxy ⭐', cost: 75, unlocked: false },
-            candy: { name: 'Candy Land 🍭', cost: 60, unlocked: false },
-            forest: { name: 'Forest 🌲', cost: 40, unlocked: false },
-            minimal: { name: 'Minimal 🤍', cost: 30, unlocked: false }
+            'pookie': { name: 'Pookie Vibes', cost: 0 },
+            'forest': { name: 'Forest Vibes 🌳', cost: 100 },
+            'neon': { name: 'Neon Glow 🌈', cost: 200 },
+            'galaxy': { name: 'Galaxy Dreams 🌌', cost: 300 },
+            'candy': { name: 'Candy Land 🍭', cost: 400 },
+            'pookie-paradise': { name: 'Pookie Paradise 🌸✨', cost: 500 },
+            'golden': { name: 'Golden Royal 👑', cost: 800 },
+            'cyberpunk': { name: 'Cyberpunk Night 🌃', cost: 1000 },
         };
 
         const styles = {
             classic: ['❌', '⭕'],
+            emoji: ['💅', '👑'],
             hearts: ['💖', '💙'],
-            stars: ['⭐', '🌟'],
-            fire: ['🔥', '❄️'],
-            letter: ['M', 'N']
+            food: ['🍔', '🍕'],
+            anime: ['👀', '✨']
         };
 
         const coinRewards = {
-            easy: { win: 8, lose: 2 },
-            medium: { win: 10, lose: 3 },
-            hard: { win: 15, lose: 5 },
-            two: { win: 12, lose: 4 }
+            easy: { win: 10, lose: 2, draw: 5 },
+            medium: { win: 15, lose: 2, draw: 5 },
+            hard: { win: 25, lose: 2, draw: 5 },
+            twoPlayer: { win: 12, draw: 5 } // In 2P, only winner/draw gets coins
         };
 
         const messages = {
-            win: [
-                "You absolutely slayed! 💅✨",
-                "Period! That was iconic! 👑💫", 
-                "Main character energy! 🌟✨",
-                "You served and left no crumbs! 🔥💯",
-                "Periodt! You're unstoppable! 💪👑"
-            ],
-            lose: [
-                "Oop! Not your day bestie 😔💔",
-                "It's giving second place vibes 😅💕",
-                "Plot twist! Better luck next time! 🎭✨",
-                "Don't worry, you're still that girl! 💖🫶"
-            ],
-            draw: [
-                "It's giving stalemate energy! 😎🤝",
-                "A tie? That's so fetch! ⚖️✨",
-                "Perfectly balanced! 💯🌈",
-                "Both queens won today! 👸👸"
-            ],
-            playerTurn: [
-                "Your turn bestie! 💫",
-                "Show them what you got! ✨",
-                "Make your move queen! 👑",
-                "Time to serve looks! 💅"
-            ],
-            botTurn: [
-                "Bot is thinking... 🤔💭",
-                "AI is plotting! 🤖✨",
-                "Computer's turn! 💻",
-                "Bot mode activated! 🔥"
-            ],
-            player2Turn: [
-                "Player 2's turn! 🎮",
-                "Your move bestie! 💖",
-                "Time to shine! ⭐",
-                "Go off! 🔥"
-            ]
+            win: ["Queen Energy 👑✨", "You ate and left no crumbs! 💅", "Period! That was iconic!", "We eating good tonight 🍕🔥"],
+            lose: ["Nahhh you flopped 💔", "It's giving second place...", "Oof, that was a plot twist!", "It's okay bestie, run it back! 💪"],
+            draw: ["It's a tie! Both of you slayed.", "A perfect stalemate! 🤝", "Okay, equally iconic! ✨"]
         };
+        
+        const winPatterns = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]];
 
-        const winPatterns = [
-            [0, 1, 2], [3, 4, 5], [6, 7, 8], 
-            [0, 3, 6], [1, 4, 7], [2, 5, 8], 
-            [0, 4, 8], [2, 4, 6] 
-        ];
-
-        window.onload = function() {
+        // --- INITIALIZATION ---
+        window.onload = () => {
             loadGameData();
-            updateCoinDisplays();
-            updateThemeSelection();
-            updateStyleSelection();
-            applyTheme(currentTheme);
+            applyTheme(gameState.currentTheme);
+            createGameBoard();
+            renderThemeShop();
+            renderStyleOptions();
+            updateAllUI();
         };
 
+        // --- DATA PERSISTENCE (LocalStorage) ---
         function saveGameData() {
-            const gameData = {
-                coins: coins,
-                themes: themes,
-                currentTheme: currentTheme,
-                currentStyle: currentStyle,
-                scores: scores
-            };
-            localStorage.setItem('pookieTicTacToe', JSON.stringify(gameData));
+            localStorage.setItem('pookieTicTacToeData', JSON.stringify(gameState));
         }
 
         function loadGameData() {
-            const saved = localStorage.getItem('pookieTicTacToe');
-            if (saved) {
-                const gameData = JSON.parse(saved);
-                coins = gameData.coins || 0;
-                Object.assign(themes, gameData.themes || themes);
-                currentTheme = gameData.currentTheme || 'pookie';
-                currentStyle = gameData.currentStyle || 'classic';
-                scores = gameData.scores || { player1: 0, player2: 0, draws: 0 };
+            const savedData = localStorage.getItem('pookieTicTacToeData');
+            if (savedData) {
+                gameState = JSON.parse(savedData);
+                // Ensure new themes/styles are added if player has old save data
+                if (!gameState.unlockedThemes) gameState.unlockedThemes = ['pookie'];
             }
         }
 
-        function addCoins(amount) {
-            coins += amount;
+        // --- UI & THEME MANAGEMENT ---
+        function applyTheme(themeKey) {
+            document.body.className = `theme-${themeKey}`;
+            gameState.currentTheme = themeKey;
+        }
+
+        function updateAllUI() {
             updateCoinDisplays();
-            saveGameData();
-            
-            showCoinAnimation(amount);
-        }
-
-        function updateCoinDisplays() {
-            document.querySelectorAll('[id^="coinCount"]').forEach(el => {
-                el.textContent = coins;
-            });
-        }
-
-        function showCoinAnimation(amount) {
-            const coinEl = document.createElement('div');
-            coinEl.className = 'coin-animation';
-            coinEl.textContent = `+${amount} 💰`;
-            coinEl.style.left = '50%';
-            coinEl.style.top = '50%';
-            document.body.appendChild(coinEl);
-            
-            setTimeout(() => {
-                document.body.removeChild(coinEl);
-            }, 2000);
+            updateScoreBoard();
+            renderThemeShop();
+            renderStyleOptions();
         }
 
         function showScreen(screenId) {
-            document.querySelectorAll('.screen').forEach(screen => {
-                screen.classList.remove('active');
-            });
+            document.querySelectorAll('.screen').forEach(screen => screen.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
+            if (screenId === 'customizationScreen' || screenId === 'homeScreen' || screenId === 'difficultyScreen') {
+                updateAllUI();
+            }
         }
 
-        function showHome() {
-            showScreen('homeScreen');
+        function createGameBoard() {
+            const boardElement = document.getElementById('gameBoard');
+            boardElement.innerHTML = '';
+            for (let i = 0; i < 9; i++) {
+                const cell = document.createElement('button');
+                cell.classList.add('cell');
+                cell.dataset.index = i;
+                cell.onclick = () => makeMove(i);
+                boardElement.appendChild(cell);
+            }
+        }
+
+        function renderThemeShop() {
+            const grid = document.getElementById('themeGrid');
+            grid.innerHTML = '';
+            for (const key in themes) {
+                const theme = themes[key];
+                const isUnlocked = gameState.unlockedThemes.includes(key);
+                const isSelected = gameState.currentTheme === key;
+
+                const item = document.createElement('div');
+                item.className = `theme-item theme-${key}-preview`;
+                if (isSelected) item.classList.add('selected');
+                if (!isUnlocked) item.classList.add('locked');
+
+                item.innerHTML = `
+                    ${theme.name}
+                    ${!isUnlocked ? `<div class="coin-price">${theme.cost} 💰</div>` : '<div class="coin-price">Unlocked ✨</div>'}
+                `;
+                item.onclick = () => handleThemeClick(key, theme.cost, isUnlocked);
+                grid.appendChild(item);
+            }
+        }
+        
+        function renderStyleOptions() {
+            const grid = document.getElementById('styleOptionsGrid');
+            grid.innerHTML = '';
+            for (const key in styles) {
+                const style = styles[key];
+                const isSelected = gameState.currentStyle === key;
+                const option = document.createElement('div');
+                option.className = 'style-option';
+                if(isSelected) option.classList.add('selected');
+                option.dataset.style = key;
+                option.textContent = style.join('');
+                option.onclick = () => {
+                    gameState.currentStyle = key;
+                    renderStyleOptions();
+                    saveGameData();
+                };
+                grid.appendChild(option);
+            }
+        }
+
+        function handleThemeClick(key, cost, isUnlocked) {
+            if (isUnlocked) {
+                applyTheme(key);
+                renderThemeShop();
+                saveGameData();
+            } else {
+                if (gameState.coins >= cost) {
+                    selectedThemeForPurchase = key;
+                    document.getElementById('purchaseMessage').textContent = `Unlock ${themes[key].name} for ${cost} coins?`;
+                    document.getElementById('purchasePopup').style.display = 'flex';
+                } else {
+                    showTempMessage("You're too broke for that bestie 💔");
+                }
+            }
+        }
+        
+        document.getElementById('confirmPurchase').onclick = () => {
+            const key = selectedThemeForPurchase;
+            const cost = themes[key].cost;
+            if (gameState.coins >= cost) {
+                gameState.coins -= cost;
+                gameState.unlockedThemes.push(key);
+                applyTheme(key);
+                updateAllUI();
+                saveGameData();
+                closePurchasePopup();
+                showTempMessage("Vibe Unlocked! It's giving... new era! ✨");
+            }
+        };
+
+        function closePurchasePopup() { document.getElementById('purchasePopup').style.display = 'none'; }
+        
+        // --- COIN & SCORE MANAGEMENT ---
+        function addCoins(amount) {
+            if (amount <= 0) return;
+            gameState.coins += amount;
+            showCoinAnimation(amount);
             updateCoinDisplays();
+            saveGameData();
         }
 
-        function showGameMode() {
-            showScreen('difficultyScreen');
+        function updateCoinDisplays() {
+            document.querySelectorAll('[id^="coinCount"]').forEach(el => el.textContent = gameState.coins);
         }
 
-        function showCustomization() {
-            showScreen('customizationScreen');
-            updateThemeSelection();
-            updateStyleSelection();
+        function updateScoreBoard() {
+            document.getElementById('player1Score').textContent = gameState.scores.player1;
+            document.getElementById('player2Score').textContent = gameState.scores.player2;
+            document.getElementById('drawScore').textContent = gameState.scores.draws;
         }
 
+        // --- GAME START & SETUP ---
         function startSinglePlayer(selectedDifficulty) {
             gameMode = 'single';
             difficulty = selectedDifficulty;
+            document.getElementById('player1Label').textContent = 'You';
             document.getElementById('player2Label').textContent = 'Bot';
-            initializeGame();
+            resetGame(false); // Don't reset scores
             showScreen('gameScreen');
         }
 
         function startTwoPlayer() {
             gameMode = 'two';
+            document.getElementById('player1Label').textContent = 'Player 1';
             document.getElementById('player2Label').textContent = 'Player 2';
-            initializeGame();
+            resetGame(false);
             showScreen('gameScreen');
         }
 
-        function applyTheme(themeName) {
-            document.body.className = `theme-${themeName}`;
-            currentTheme = themeName;
-            saveGameData();
-        }
-
-        function updateThemeSelection() {
-            document.querySelectorAll('.theme-item').forEach(item => {
-                const theme = item.dataset.theme;
-                item.classList.remove('selected', 'locked');
-                
-                if (theme === currentTheme) {
-                    item.classList.add('selected');
-                }
-                
-                if (!themes[theme].unlocked) {
-                    item.classList.add('locked');
-                }
-                
-                item.onclick = () => selectTheme(theme);
-            });
-        }
-
-        function selectTheme(themeName) {
-            if (!themes[themeName].unlocked) {
-                if (coins >= themes[themeName].cost) {
-                    selectedThemeForPurchase = themeName;
-                    document.getElementById('purchaseMessage').textContent = 
-                        `Unlock ${themes[themeName].name} for ${themes[themeName].cost} coins?`;
-                    document.getElementById('purchasePopup').style.display = 'flex';
-                } else {
-                    showTempMessage('Not enough coins bestie! 💔');
-                }
-                return;
+        function resetGame(resetScores = false) {
+            if(resetScores) {
+                gameState.scores = { player1: 0, player2: 0, draws: 0 };
+                updateScoreBoard();
             }
-            
-            applyTheme(themeName);
-            updateThemeSelection();
-        }
-
-        function confirmThemePurchase() {
-            const theme = selectedThemeForPurchase;
-            if (coins >= themes[theme].cost) {
-                coins -= themes[theme].cost;
-                themes[theme].unlocked = true;
-                applyTheme(theme);
-                updateCoinDisplays();
-                updateThemeSelection();
-                closePurchasePopup();
-                showTempMessage('Theme unlocked! Slay queen! ✨');
-                saveGameData();
-            }
-        }
-
-        function closePurchasePopup() {
-            document.getElementById('purchasePopup').style.display = 'none';
-        }
-
-        function updateStyleSelection() {
-            document.querySelectorAll('.style-option').forEach(option => {
-                option.classList.remove('selected');
-                if (option.dataset.style === currentStyle) {
-                    option.classList.add('selected');
-                }
-                
-                option.onclick = () => {
-                    currentStyle = option.dataset.style;
-                    updateStyleSelection();
-                    saveGameData();
-                };
-            });
-        }
-
-        function initializeGame() {
             gameBoard = ['', '', '', '', '', '', '', '', ''];
             currentPlayer = 'X';
             gameActive = true;
-            updateBoard();
+            updateBoardUI();
             updateStatus();
         }
 
-        function updateBoard() {
-            const cells = document.querySelectorAll('.cell');
-            const [xSymbol, oSymbol] = styles[currentStyle];
-            
-            cells.forEach((cell, index) => {
-                cell.textContent = gameBoard[index] === 'X' ? xSymbol : gameBoard[index] === 'O' ? oSymbol : '';
-                cell.classList.toggle('taken', gameBoard[index] !== '');
-            });
-        }
-
-        function updateStatus() {
-            const status = document.getElementById('gameStatus');
-            if (!gameActive) return;
-
-            if (gameMode === 'single') {
-                if (currentPlayer === 'X') {
-                    status.textContent = getRandomMessage('playerTurn');
-                } else {
-                    status.textContent = getRandomMessage('botTurn');
-                }
-            } else {
-                if (currentPlayer === 'X') {
-                    status.textContent = "Player 1's turn! ✨";
-                } else {
-                    status.textContent = getRandomMessage('player2Turn');
-                }
+        function initializeNewGameSession() {
+            resetGame(true); // Reset scores for a new session
+            if (gameMode === 'single' && currentPlayer === 'O') {
+                setTimeout(botMove, 600);
             }
         }
 
-        function getRandomMessage(type) {
-            const messageArray = messages[type];
-            return messageArray[Math.floor(Math.random() * messageArray.length)];
-        }
-
+        // --- CORE GAME LOGIC ---
         function makeMove(index) {
             if (gameBoard[index] !== '' || !gameActive) return;
 
             gameBoard[index] = currentPlayer;
-            updateBoard();
+            updateBoardUI();
 
             if (checkWin()) {
-                endGame('win');
+                endGame(currentPlayer === 'X' ? 'p1_win' : 'p2_win');
                 return;
             }
-
             if (checkDraw()) {
                 endGame('draw');
                 return;
@@ -1039,129 +550,129 @@
             currentPlayer = currentPlayer === 'X' ? 'O' : 'X';
             updateStatus();
 
-            if (gameMode === 'single' && currentPlayer === 'O') {
+            if (gameMode === 'single' && currentPlayer === 'O' && gameActive) {
                 setTimeout(botMove, 800);
             }
         }
-
-        function botMove() {
-            if (!gameActive) return;
-
-            let moveIndex;
-            
-            switch (difficulty) {
-                case 'easy':
-                    moveIndex = getRandomMove();
-                    break;
-                case 'medium':
-                    moveIndex = Math.random() < 0.6 ? getBestMove() : getRandomMove();
-                    break;
-                case 'hard':
-                    moveIndex = getBestMove();
-                    break;
-            }
-
-            makeMove(moveIndex);
+        
+        function updateBoardUI() {
+            const cells = document.querySelectorAll('.cell');
+            const [xSymbol, oSymbol] = styles[gameState.currentStyle];
+            cells.forEach((cell, index) => {
+                const val = gameBoard[index];
+                cell.textContent = val === 'X' ? xSymbol : val === 'O' ? oSymbol : '';
+                cell.classList.toggle('taken', val !== '');
+            });
         }
-
-        function getRandomMove() {
-            const availableMoves = gameBoard
-                .map((cell, index) => cell === '' ? index : null)
-                .filter(index => index !== null);
-            return availableMoves[Math.floor(Math.random() * availableMoves.length)];
-        }
-
-        function getBestMove() {
-            for (let i = 0; i < 9; i++) {
-                if (gameBoard[i] === '') {
-                    gameBoard[i] = 'O';
-                    if (checkWinForPlayer('O')) {
-                        gameBoard[i] = '';
-                        return i;
-                    }
-                    gameBoard[i] = '';
-                }
+        
+        function updateStatus() {
+            const statusEl = document.getElementById('gameStatus');
+            if (!gameActive) {
+                statusEl.textContent = "Game over!";
+                return;
             }
-
-            for (let i = 0; i < 9; i++) {
-                if (gameBoard[i] === '') {
-                    gameBoard[i] = 'X';
-                    if (checkWinForPlayer('X')) {
-                        gameBoard[i] = '';
-                        return i;
-                    }
-                    gameBoard[i] = '';
-                }
+            if (gameMode === 'single') {
+                statusEl.textContent = currentPlayer === 'X' ? "Your turn, slay! 💅" : "Bot is thinking... 🤔";
+            } else {
+                statusEl.textContent = `Player ${currentPlayer === 'X' ? 1 : 2}'s turn! ✨`;
             }
-    
-            if (gameBoard[4] === '') return 4;
-
-            const corners = [0, 2, 6, 8];
-            const availableCorners = corners.filter(i => gameBoard[i] === '');
-            if (availableCorners.length > 0) {
-                return availableCorners[Math.floor(Math.random() * availableCorners.length)];
-            }
-
-            return getRandomMove();
         }
 
         function checkWin() {
-            return checkWinForPlayer(currentPlayer);
-        }
-
-        function checkWinForPlayer(player) {
-            return winPatterns.some(pattern => 
-                pattern.every(index => gameBoard[index] === player)
-            );
+            return winPatterns.some(p => p.every(i => gameBoard[i] === currentPlayer));
         }
 
         function checkDraw() {
             return gameBoard.every(cell => cell !== '');
         }
 
+        // --- BOT AI LOGIC ---
+        function botMove() {
+            let moveIndex;
+            if (difficulty === 'hard') {
+                moveIndex = findBestMove();
+            } else if (difficulty === 'medium') {
+                moveIndex = Math.random() < 0.7 ? findBestMove() : findRandomMove();
+            } else { // easy
+                moveIndex = findRandomMove();
+            }
+            makeMove(moveIndex);
+        }
+
+        function findBestMove() {
+            // 1. Check for a winning move
+            for (let i = 0; i < 9; i++) {
+                if (gameBoard[i] === '') {
+                    gameBoard[i] = 'O';
+                    if (winPatterns.some(p => p.every(idx => gameBoard[idx] === 'O'))) {
+                        gameBoard[i] = ''; return i;
+                    }
+                    gameBoard[i] = '';
+                }
+            }
+            // 2. Block player's winning move
+            for (let i = 0; i < 9; i++) {
+                if (gameBoard[i] === '') {
+                    gameBoard[i] = 'X';
+                     if (winPatterns.some(p => p.every(idx => gameBoard[idx] === 'X'))) {
+                        gameBoard[i] = ''; return i;
+                    }
+                    gameBoard[i] = '';
+                }
+            }
+            // 3. Take center if available
+            if (gameBoard[4] === '') return 4;
+            // 4. Take a random corner
+            const corners = [0, 2, 6, 8].filter(i => gameBoard[i] === '');
+            if (corners.length > 0) return corners[Math.floor(Math.random() * corners.length)];
+            // 5. Take any remaining spot
+            return findRandomMove();
+        }
+        
+        function findRandomMove() {
+            const available = gameBoard.map((c, i) => c === '' ? i : null).filter(v => v !== null);
+            return available[Math.floor(Math.random() * available.length)];
+        }
+
+
+        // --- END GAME HANDLING ---
         function endGame(result) {
             gameActive = false;
+            let title = '', message = '', outcomeType = '', coins = 0;
             
-            setTimeout(() => {
-                let coinReward = 0;
-                let title, message;
-                
-                if (result === 'win') {
-                    if (gameMode === 'single') {
-                        if (currentPlayer === 'X') {
-                            scores.player1++;
-                            coinReward = coinRewards[difficulty].win;
-                            title = 'You Win!';
-                            message = getRandomMessage('win');
-                        } else {
-                            scores.player2++;
-                            coinReward = coinRewards[difficulty].lose;
-                            title = 'You Lose!';
-                            message = getRandomMessage('lose');
-                        }
-                    } else {
-                        if (currentPlayer === 'X') {
-                            scores.player1++;
-                            coinReward = coinRewards.two.win;
-                            title = 'Player 1 Wins!';
-                            message = getRandomMessage('win');
-                        } else {
-                            scores.player2++;
-                            coinReward = coinRewards.two.win;
-                            title = 'Player 2 Wins!';
-                            message = getRandomMessage('win');
-                        }
-                    }
-                } else if (result === 'draw') {
-                    scores.draws++;
-                    coinReward = 5;
-                    title = "It's a Draw!";
-                    message = getRandomMessage('draw');
+            if (gameMode === 'single') {
+                if (result === 'p1_win') {
+                    gameState.scores.player1++;
+                    coins = coinRewards[difficulty].win;
+                    title = 'You Win!'; outcomeType = 'win';
+                } else if (result === 'p2_win') {
+                    gameState.scores.player2++;
+                    coins = coinRewards[difficulty].lose;
+                    title = 'You Lost...'; outcomeType = 'lose';
                 }
-                
-                addCoins(coinReward);
-                showPopup(title, message, result, coinReward);
+            } else { // Two Player
+                if (result === 'p1_win') {
+                    gameState.scores.player1++; coins = coinRewards.twoPlayer.win;
+                    title = 'Player 1 Wins!'; outcomeType = 'win';
+                } else if (result === 'p2_win') {
+                    gameState.scores.player2++; coins = coinRewards.twoPlayer.win;
+                    title = 'Player 2 Wins!'; outcomeType = 'win';
+                }
+            }
+            
+            if (result === 'draw') {
+                gameState.scores.draws++;
+                coins = gameMode === 'single' ? coinRewards[difficulty].draw : coinRewards.twoPlayer.draw;
+                title = "It's a Draw!"; outcomeType = 'draw';
+            }
+            
+            message = messages[outcomeType][Math.floor(Math.random() * messages[outcomeType].length)];
+
+            setTimeout(() => {
+                showPopup(title, message, outcomeType, coins);
+                if(coins > 0) addCoins(coins);
                 updateScoreBoard();
+                saveGameData();
             }, 500);
         }
 
@@ -1169,65 +680,40 @@
             document.getElementById('popupTitle').textContent = title;
             document.getElementById('popupTitle').className = `popup-title ${type}`;
             document.getElementById('popupMessage').textContent = message;
-            document.getElementById('coinReward').textContent = `+${coinAmount} coins earned! 💰`;
+            document.getElementById('coinReward').textContent = coinAmount > 0 ? `+${coinAmount} coins earned! 💰` : "Better luck next time!";
             document.getElementById('gamePopup').style.display = 'flex';
         }
 
         function closePopup() {
             document.getElementById('gamePopup').style.display = 'none';
-            resetGame();
+            resetGame(); // Start a new round
         }
 
-        function resetGame() {
-            initializeGame();
-        }
-
-        function updateScoreBoard() {
-            document.getElementById('player1Score').textContent = scores.player1;
-            document.getElementById('player2Score').textContent = scores.player2;
-            document.getElementById('drawScore').textContent = scores.draws;
+        // --- ANIMATIONS & EFFECTS ---
+        function showCoinAnimation(amount) {
+            const coinEl = document.createElement('div');
+            coinEl.className = 'coin-animation';
+            coinEl.textContent = `+${amount} 💰`;
+            coinEl.style.left = `${Math.random() * 40 + 30}%`;
+            coinEl.style.top = '50%';
+            document.body.appendChild(coinEl);
+            setTimeout(() => document.body.removeChild(coinEl), 2000);
         }
 
         function showTempMessage(msg) {
-            const tempMsg = document.createElement('div');
-            tempMsg.style.cssText = `
-                position: fixed;
-                top: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                background: #ff6b9d;
-                color: white;
-                padding: 15px 25px;
-                border-radius: 25px;
-                font-weight: 500;
-                z-index: 1002;
-                animation: slideDown 0.3s ease-out;
-            `;
-            tempMsg.textContent = msg;
-            document.body.appendChild(tempMsg);
-            
-            setTimeout(() => {
-                tempMsg.style.animation = 'slideUp 0.3s ease-out forwards';
-                setTimeout(() => document.body.removeChild(tempMsg), 300);
-            }, 2000);
+            const el = document.createElement('div');
+            el.style.cssText = `position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: var(--primary-grad); color: white; padding: 15px 25px; border-radius: 25px; font-weight: 500; z-index: 2000; box-shadow: 0 5px 15px rgba(0,0,0,0.2); animation: fadeInOut 2.5s ease;`;
+            el.textContent = msg;
+            document.body.appendChild(el);
+            setTimeout(() => document.body.removeChild(el), 2500);
         }
-
-        document.getElementById('confirmPurchase').onclick = confirmThemePurchase;
-
-        updateScoreBoard();
         
-        const style = document.createElement('style');
-        style.textContent = `
-            @keyframes slideDown {
-                from { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-                to { opacity: 1; transform: translateX(-50%) translateY(0); }
-            }
-            @keyframes slideUp {
-                from { opacity: 1; transform: translateX(-50%) translateY(0); }
-                to { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-            }
-        `;
-        document.head.appendChild(style);
+        // Add keyframe animation for temp message
+        const styleSheet = document.createElement("style");
+        styleSheet.type = "text/css";
+        styleSheet.innerText = `@keyframes fadeInOut { 0% { opacity: 0; transform: translate(-50%, -20px); } 20% { opacity: 1; transform: translate(-50%, 0); } 80% { opacity: 1; transform: translate(-50%, 0); } 100% { opacity: 0; transform: translate(-50%, -20px); } }`;
+        document.head.appendChild(styleSheet);
+
     </script>
 </body>
 </html>
